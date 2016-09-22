@@ -1,0 +1,32 @@
+html,body {
+	margin: 0;
+	padding: 0;
+}
+video {
+	display: none;
+}
+#camera {
+	position: relative;
+}
+canvas {
+	background: url("img/thumb.png");
+	background-size: cover;
+	width: 640px;
+	height: 576px;
+}
+#shutter {
+	display: none;
+	position: absolute;
+	bottom: 32px;
+	left: 64px;
+	width: 512px;
+	height: 96px;
+	background: url("img/camera2.png");
+	background-position: 0% 0%;
+	background-size: cover;
+	cursor: pointer;
+	z-index: 1;
+}
+#shutter:active {
+	background-position: 0% 100%;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Game Boy Selfie</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- SEO -->
+		<meta name="application-name" content="Game Boy Selfie" />
+		<meta name="author" content="Kyle Amoroso" />
+		<meta name="description" content="A selfie web app that lets you capture yourself in a Nintendo Game Boy." />
+		<meta name="keywords" content="gameboy,game boy,selfie,web app,chrome app" />
+		<meta name="version" content="1.1" />
+		<meta property="og:title" content="Game Boy Selfie" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="http://pitt.edu/~ksa18/selfie/" />
+		<meta property="og:image" content="http://pitt.edu/~ksa18/selfie/splash.png" />
+		<meta property="og:description" content="A selfie Chrome App that lets you capture yourself in a Nintendo Game Boy." />
+		<!-- Favicons -->
+		<link rel="icon" type="image/png" href="icons/gbselfie-96.png" />
+		<!-- Custom -->
+		<link rel="stylesheet" href="style.css" />
+		<script src="gbselfie.js"></script>
+	</head>
+	
+	<body>
+		<div id="gameboy">
+			<video autoplay></video>
+			<div id="camera">
+				<canvas id="screen" width="640" height="576"></canvas>
+				<a href="#" download="" title="Take a selfie!" role="button" id="shutter"></a>
+			</div>
+		</div>
+	</body>
+</html>
