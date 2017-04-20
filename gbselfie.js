@@ -15,18 +15,27 @@ class GBSelfie {
     	this.offsetX = 0;
     	this.offsetY = 0;
     	this.scale = 1;
+
+        // GB colors, grayscale colors
     	this.colors = [
-    		15, 56, 15,
-    		48, 98, 48,
-    		139, 172, 15,
-    		155, 188, 15
-    	];
-    	this.thresholdMap4x4 = [
-    		[1, 9, 3, 11],
-    		[13, 5, 15, 7],
-    		[4, 12, 2, 10],
-    		[16, 8, 14, 6]
-    	];
+            [ 15,  56,  15],    // [  0,   0,   0],
+            [ 48,  98,  48],    // [ 85,  85,  85],
+            [139, 172,  15],    // [170, 170, 170],
+            [155, 188,  15]     // [255, 255, 255]
+        ];
+
+        // 8-bit grayscale to 2-bit color GB,
+        // 256 / 4 = 64 = 8 x 8 threshold map
+    	this.thresholdMap = [
+        	[ 0, 48, 12, 60,  3, 51, 15, 63],
+        	[32, 16, 44, 28, 35, 19, 47, 31],
+        	[ 8, 56,  4, 52, 11, 59,  7, 55],
+        	[40, 24, 36, 20, 43, 27, 39, 23],
+        	[ 2, 50, 14, 62,  1, 49, 13, 61],
+        	[34, 18, 46, 30, 33, 17, 45, 29],
+        	[10, 58,  6, 54,  9, 57,  5, 53],
+        	[42, 26, 38, 22, 41, 25, 37, 21]
+        ];
     }
 
 	init() {
@@ -55,16 +64,21 @@ class GBSelfie {
 		this.display = new Game();
 
 		this.display.addEventListener("draw", (event) => {
-			const {dt} = event.detail;
+			// const {dt} = event.detail;
 
-			if(this.filterOutput) {
+			if(this.filterOutput != null) {
 				this.ctx.putImageData(this.filterOutput, 0, 0);
 				this.filterOutput = null;
 			}
 		});
 
 		this.display.addEventListener("tick", (event) => {
-			const {dt} = event.detail;
+			// const {dt} = event.detail;
+            const clamp = (val, min, max) => Math.max(min, Math.min(val, max));
+            const intensity = (r, g, b) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            const mapSide = this.thresholdMap.length;
+            const mapSize = mapSide ** 2;
+            const colors = this.colors.length;
 
 			this.draftCtx.drawImage(
 				this.video,
@@ -94,26 +108,21 @@ class GBSelfie {
 			for(let i = 0; i < pixels.length; i += 4) {
 				const x = i / 4 % width;
 				const y = Math.floor(i / 4 / width);
-				const map = this.thresholdMap4x4[x % 4][y % 4];
-
-				const gray = Math.floor(
-					0.2126 * pixels[i + 0] +
-					0.7152 * pixels[i + 1] +
-					0.0722 * pixels[i + 2]
-				);
-				const oldPixel = gray + gray * map / 17;
-				const newPixel = Math.max(0, Math.min(3, Math.floor(oldPixel * 3 / 255)));
+				const threshold = this.thresholdMap[x % mapSide][y % mapSide];
+				const gray = intensity(pixels[i + 0], pixels[i + 1], pixels[i + 2]);
+                const nearestPixel = clamp(Math.floor(colors * gray / 256 + threshold / mapSize - 0.5), 0, colors - 1);
 
 				for(let k = 0; k < 4; k++) {
 					for(let h = 0; h < 4; h++) {
 						const j = 16 * x + 64 * width * y + 4 * h + 16 * width * k;
-						output.data[j + 0] = this.colors[3 * newPixel + 0];
-						output.data[j + 1] = this.colors[3 * newPixel + 1];
-						output.data[j + 2] = this.colors[3 * newPixel + 2];
+						output.data[j + 0] = this.colors[nearestPixel][0];
+						output.data[j + 1] = this.colors[nearestPixel][1];
+						output.data[j + 2] = this.colors[nearestPixel][2];
 						output.data[j + 3] = 255;
 					}
 				}
 			}
+
 			this.filterOutput = output;
 		});
 	}
@@ -122,7 +131,7 @@ class GBSelfie {
 		if(navigator.mediaDevices) {
 			navigator.mediaDevices.getUserMedia({
 				video: {width, height, facingMode: "user"}
-			}).then((stream) => this.load(stream)).catch((error) => {
+			}).then((stream) => this.loadVideo(stream)).catch((error) => {
 				console.log(error);
 				this.hideWebcam();
 			});
@@ -132,7 +141,7 @@ class GBSelfie {
 		}
 	}
 
-	load(stream) {
+	loadVideo(stream) {
 		if("srcObject" in this.video) {
 			this.video.srcObject = stream;
 		} else {
@@ -156,8 +165,8 @@ class GBSelfie {
 				}, 500);
 				this.sound.currentTime = 0;
 				this.sound.play();
-				this.href = this.canvas.toDataURL();
-				this.download = `img${timestamp}`;
+				this.shutter.href = this.canvas.toDataURL();
+				this.shutter.download = `img${timestamp}`;
 			});
 
             this.shutter.classList.add("active");
