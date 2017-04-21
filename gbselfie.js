@@ -2,7 +2,6 @@
 
 class GBSelfie {
     constructor() {
-    	this.localMediaStream = null;
     	this.video = null;
     	this.sound = null;
     	this.display = null;
@@ -147,8 +146,6 @@ class GBSelfie {
 		} else {
 			throw new Error("video.srcObject unsupported");
 		}
-
-		this.localMediaStream = stream;
 
 		this.video.addEventListener("loadeddata", (event) => {
 			document.body.appendChild(this.draft);

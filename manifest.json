@@ -1,9 +1,11 @@
 {
+	"manifest_version": 2,
+	"minimum_chrome_version": "53.0",
 	"name": "Game Boy Selfie",
+	"short_name": "GB Selfie",
 	"description": "A selfie Chrome App that lets you capture yourself in a Nintendo Game Boy.",
 	"version": "1.2",
 	"author": "Kyle Amoroso",
-	"manifest_version": 2,
 	"app": {
 		"background": {
 			"scripts": ["background.js"]
