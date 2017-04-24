@@ -15,7 +15,7 @@ class GBSelfie {
     	this.offsetY = 0;
     	this.scale = 1;
 
-        // GB colors, grayscale colors
+        // GB colors            grayscale colors
     	this.colors = [
             [ 15,  56,  15],    // [  0,   0,   0],
             [ 48,  98,  48],    // [ 85,  85,  85],
@@ -23,7 +23,7 @@ class GBSelfie {
             [155, 188,  15]     // [255, 255, 255]
         ];
 
-        // 8-bit grayscale to 2-bit color GB,
+        // 8-bit grayscale to 2-bit monochrome GB,
         // 256 / 4 = 64 = 8 x 8 threshold map
     	this.thresholdMap = [
         	[ 0, 48, 12, 60,  3, 51, 15, 63],
