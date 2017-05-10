@@ -1,43 +1,44 @@
 html,body {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 video {
-	display: none;
+    display: none;
 }
 
 #camera {
-	position: relative;
+    position: relative;
+    overflow: hidden;
 }
 
 canvas {
-	background: url("images/thumb.png");
-	background-size: cover;
-	width: 640px;
-	height: 576px;
+    display: block;
+    background: url("images/thumb.png");
+    background-size: cover;
+    width: 640px;
+    height: 576px;
 }
 
 #shutter {
-	transition: transform 0.5s;
-	display: none;
-	position: absolute;
-	top: 448px;
-	left: 64px;
-	width: 512px;
-	height: 96px;
-	transform: translate(0, 128px);
-	background: url("images/camera.png");
-	background-position: 0 0;
-	background-size: cover;
-	cursor: pointer;
-	z-index: 1;
+    transition: transform 0.5s;
+    display: none; /* shown on successful camera load */
+    position: absolute;
+    top: 448px;
+    left: 64px;
+    width: 512px;
+    height: 96px;
+    transform: translate(0, 128px);
+    background: url("images/camera.png");
+    background-position: 0 0;
+    background-size: cover;
+    cursor: pointer;
 }
 
 #camera:hover #shutter.active {
-	transform: translate(0, 0);
+    transform: translate(0, 0);
 }
 
 #shutter:active {
-	background-position: 0 100%;
+    background-position: 0 100%;
 }
