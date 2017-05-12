@@ -9,8 +9,8 @@
 		<meta name="application-name" content="Game Boy Selfie" />
 		<meta name="author" content="Kyle Amoroso" />
 		<meta name="description" content="A selfie Chrome App that lets you capture yourself in a Nintendo Game Boy." />
-		<meta name="keywords" content="gameboy,game boy,selfie,filter,web app,chrome app" />
-		<meta name="version" content="1.2" />
+		<meta name="keywords" content="game boy selfie,nintendo,game boy,selfie,filter,html5,chrome app" />
+		<meta name="version" content="1.3" />
 		<meta property="og:title" content="Game Boy Selfie" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://kamoroso94.github.io/game-boy-selfie" />
@@ -18,7 +18,12 @@
 		<meta property="og:description" content="A selfie Chrome App that lets you capture yourself in a Nintendo Game Boy." />
 
 		<!-- Favicons -->
-		<link rel="icon" type="image/png" href="icons/favicon-96.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-16.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-32.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-48.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-64.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-96.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-128.png" />
 
 		<!-- Custom -->
 		<link rel="stylesheet" href="style.css" />
@@ -27,12 +32,11 @@
 	</head>
 
 	<body>
-		<div id="gameboy">
-			<video autoplay></video>
-			<div id="camera">
-				<canvas id="screen" width="640" height="576"></canvas>
-				<a href="#" download="" title="Take a selfie!" role="button" id="shutter"></a>
-			</div>
+		<div id="gb-container">
+			<video autoplay class="hidden"></video>
+			<canvas width="640" height="576" id="gb-screen"></canvas>
+			<div role="button" title="Flip camera" class="gb-button hidden" id="gb-flip"></div>
+			<a href="#" download="" role="button" title="Take a selfie!" class="gb-button hidden" id="gb-shutter"></a>
 		</div>
 	</body>
 </html>

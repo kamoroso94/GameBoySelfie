@@ -1,18 +1,18 @@
-html,body {
+html, body {
     margin: 0;
     padding: 0;
 }
 
-video {
+.hidden {
     display: none;
 }
 
-#camera {
+#gb-container {
     position: relative;
     overflow: hidden;
 }
 
-canvas {
+#gb-screen {
     display: block;
     background: url("images/thumb.png");
     background-size: cover;
@@ -20,25 +20,36 @@ canvas {
     height: 576px;
 }
 
-#shutter {
+.gb-button {
     transition: transform 0.5s;
-    display: none; /* shown on successful camera load */
     position: absolute;
-    top: 448px;
-    left: 64px;
-    width: 512px;
-    height: 96px;
-    transform: translate(0, 128px);
-    background: url("images/camera.png");
     background-position: 0 0;
     background-size: cover;
     cursor: pointer;
 }
 
-#camera:hover #shutter.active {
-    transform: translate(0, 0);
+.gb-button:active {
+    background-position: 0 100%;
 }
 
-#shutter:active {
-    background-position: 0 100%;
+#gb-container:hover .gb-button {
+    transform: translateY(0);
+}
+
+#gb-flip {
+    top: 32px;
+    right: 32px;
+    transform: translateY(-128px);
+    width: 96px;
+    height: 96px;
+    background-image: url("images/flip.png");
+}
+
+#gb-shutter {
+    top: 448px;
+    left: 64px;
+    width: 512px;
+    height: 96px;
+    transform: translate(0, 128px);
+    background-image: url("images/camera.png");
 }
